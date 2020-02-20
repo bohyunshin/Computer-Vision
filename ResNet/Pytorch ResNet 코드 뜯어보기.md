@@ -16,7 +16,7 @@ def conv3x3(in_planes, out_planes, stride=1, groups=1, dilation=1):
                      padding=dilation, groups=groups, bias=False, dilation=dilation)
 ```
 
-이 함수는 nn.Conv2d를 반환한다. kernel_size가 3이고 pading, stride가 모두 1인 것으로 보아, 차원을 유지하는 convolution임을 알 수 있다. 필터때문에 왜 $3\times3$이라고 이름 붙인것 같다.
+이 함수는 nn.Conv2d를 반환한다. kernel_size가 3이고 pading, stride가 모두 1인 것으로 보아, 차원을 유지하는 convolution임을 알 수 있다. 필터의 크기 때문에 $3\times3$이라고 이름 붙인것 같다.
 
 ```python 
 def conv1x1(in_planes, out_planes, stride=1):
@@ -81,7 +81,7 @@ def forward(self, x):
 
 다음으로 ```BasicBlock```  클래스가 호출되면 자동으로 수행되는 ```forward``` 함수이다. 순서대로 ```conv1, bn1, relu, conv2, bn2```가 수행되고 ```identity```를 더해준다. 그리고 ```relu```에 통과시킨다. 이는 블록을 코드로 구현한 것이다.
 
-![image-20200220145426801](C:\Users\sbh0613\AppData\Roaming\Typora\typora-user-images\image-20200220145426801.png)
+<img src="https://user-images.githubusercontent.com/36855000/74916058-88370480-5408-11ea-99dd-36906add2a0f.png">
 
 ResNet 논문에서는 weight layer에 FC든, CNN이든 어떠한 것이 올 수 있다고 말한다. 여기서는 weight layer로 CNN이 사용된 것이다. 또한 두 개의 CNN층을 통과한 output에 ```identity```를 더하고 여기에 ```relu```을 적용하는 모습은 위 그림과 정확히 일치한다.
 
@@ -151,7 +151,7 @@ def forward(self, x):
 
 그렇다면 `BasicBlock`과 `Bottleneck`의 차이점은 무엇일까? [여기](https://medium.com/@erikgaas/resnet-torchvision-bottlenecks-and-layers-not-as-they-seem-145620f93096)의 자세한 설명을 살펴보자.
 
-![image-20200220164258321](C:\Users\sbh0613\AppData\Roaming\Typora\typora-user-images\image-20200220164258321.png)
+<img src="https://user-images.githubusercontent.com/36855000/74916056-879e6e00-5408-11ea-976e-0f024a1c0a83.png">
 
 왼쪽이 `BasicBlcok`, 오른쪽이 `Bottleneck`이다. `BasicBlcok`은 $3\times3$ convolution을 사용하는데, 이게 layers가 깊어질수록 계산량이 장난 아니라고 한다. 반면에 `Bottleneck`과 같이 $1\times1$ convolution을 시작과 끝에 해주면 계산량은 훨씬 줄일 수 있다고 한다. 대신, 차원이 줄어드니까 expansion을 하는 것이다.
 
@@ -160,7 +160,7 @@ def forward(self, x):
 다음으로는 ResNet 클래스이다. 먼저 ResNet의 전체적인 아키텍쳐를 살펴보자.
 논문에 따르면 image를 입력 받고 거치는 첫 번째 `conv1`은 아래와 같다.
 
-![image-20200220154205058](C:\Users\sbh0613\AppData\Roaming\Typora\typora-user-images\image-20200220154205058.png)
+<img src = "https://user-images.githubusercontent.com/36855000/74916054-879e6e00-5408-11ea-8f3a-f04ca90ae1fb.png">
 
 즉, 필터의 크기가 $7\times7$이며 output channels은 64이다. 이를 코드로 구현하면 아래와 같다.
 
@@ -250,11 +250,11 @@ self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
 self.fc = nn.Linear(512 * block.expansion, num_classes)
 ```
 
-나머지는 쉽게 알 수 있고 ` self.layer`만 살펴보자. _make_layer 함수를 이용해, 사용할 block, out channels의 크기를 받는다. 또한 리스트 layers는 ResNet 클래스의 인자이다. 즉, 각 layer에서 몇 개를 쌓을지 입력받는다. 따라서 `layer[0]`은 첫 번째 layer의 층 개수라는 뜻이다.
+나머지는 쉽게 알 수 있고 `self.layer`만 살펴보자. _make_layer 함수를 이용해, 사용할 block, out channels의 크기를 받는다. 또한 리스트 layers는 ResNet 클래스의 인자이다. 즉, 각 layer에서 몇 개를 쌓을지 입력받는다. 따라서 `layer[0]`은 첫 번째 layer의 층 개수라는 뜻이다.
 
 `layer1`부터 `layer4`까지는 논문의 resnet 아키텍처에서 네 종류의 layer와 대응된다. 예를 들어 `layer1`은 아래 아키텍처와 대응된다.
 
-<img src="C:\Users\sbh0613\AppData\Roaming\Typora\typora-user-images\image-20200220171521290.png" alt="image-20200220171521290" style="zoom:67%;" />
+<img width="400" src="https://user-images.githubusercontent.com/36855000/74916052-866d4100-5408-11ea-872b-de5f3e0a6577.png">
 
 
 
