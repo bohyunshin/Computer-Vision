@@ -8,13 +8,17 @@
 
 깊은 신경망이 가지는 문제를 degradation라고 부른다. 이는 layer가 깊어질수록 정확도는 어느 순간 상승하지 않고 빠르게 감소한다는 것이다. *이는 훈련 데이터에 대한 과적합 현상이 아니다.* 이는 아래 실험 결과로부터도 나타난 현상이다.
 
-<img src="https://user-images.githubusercontent.com/36855000/74933392-30f45c80-5427-11ea-9a2d-245ce8903edd.png">
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/36855000/74933392-30f45c80-5427-11ea-9a2d-245ce8903edd.png">
+ </p>
 
 왼쪽 그림은 20-layer 신경망이고 오른쪽 그림은 56-layer 신경망이다. 더 깊은 신경망의 훈련, 테스트 에러가 더 얕은 신경망의 그것들보다 더 높음을 확인할 수 있다.
 
 해당 논문에서 제시하는 ResNet은 deep residual learning으로써, 이러한 degradation 문제를 해결한다. 먼저 residual learning의 도식을 아래 그림으로 살펴보자. 
 
-<img src="https://user-images.githubusercontent.com/36855000/74933395-32258980-5427-11ea-813f-d6ee0d61b359.png">
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/36855000/74933395-32258980-5427-11ea-813f-d6ee0d61b359.png">
+ </p>
 
 아래와 같이 notation을 정의하자.
 
@@ -49,6 +53,8 @@ $\mathcal{F}$의 형태는 제약이 없지만 한 개의 layers만 가진다면
 
 #### 3. Architecture
 
-<img src="https://user-images.githubusercontent.com/36855000/74933398-32be2000-5427-11ea-8ff7-b6dea7bc3390.png">
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/36855000/74933398-32be2000-5427-11ea-8ff7-b6dea7bc3390.png">
+</p>
 
 위 그름은 왼쪽부터 차례대로 VGG, plain network, residual network의 아키텍처이다. residual network을 사용한 아키텍처는 옆쪽에 화살표로 표시된 shortcut connections이 존재한다.
