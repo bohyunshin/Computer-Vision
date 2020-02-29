@@ -6,4 +6,6 @@
 순서는 아래와 같습니다.
 
 - [X] ResNet (2.27 완료)
-- [ ] DenseNet (2.28 작업 중)
+- [X] DenseNet (2.29 완료)
+- [ ] SqueezeNet
+- [ ] Inception
