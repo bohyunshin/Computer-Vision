@@ -5,7 +5,7 @@
 
 순서는 아래와 같습니다.
 
+- [ ] GoogLeNet
 - [X] ResNet (2.27 완료)
 - [X] DenseNet (2.29 완료)
 - [ ] SqueezeNet
-- [ ] Inception
